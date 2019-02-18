@@ -84,31 +84,46 @@ p:after {
 
 2)可以利用css3的calc函数.(利用第二种情况来实现)
 
-第一种情况 ``position:absolute``
+~~第一种情况 ``position:absolute``~~
 
-如果元素是position：absolute的话，那么百分比基准是相对他父级元素中第一个position：relative元素的宽和高为基准的。
+~~如果元素是position：absolute的话，那么百分比基准是相对他父级元素中第一个position：relative元素的宽和高为基准的。~~
 
-比如position：relative元素的width为200px，height为100px
+~~比如position：relative元素的width为200px，height为100px~~
 
-那么position：absolute元素里
+~~那么position：absolute元素里~~
 
 ```Css
 width：calc(10%)  // 20px
 height: calc(10%) // 10px
 ```
 
-第二种情况 ``普通文档流中元素``
+~~第二种情况 ``普通文档流中元素``~~
 
-这种情况元素的宽和高的百分比基准都是父元素的宽度。
+~~这种情况元素的宽和高的百分比基准都是父元素的宽度。~~
 
-比如一个div的父元素宽度是200px，高度是100px.
+~~比如一个div的父元素宽度是200px，高度是100px.~~
 
-这个div设置
+~~这个div设置~~
 
 ```
 width：calc(10%)  // 20px
 height: calc(10%) // 20px
 ```
+
+后来自己证实得知，calc函数不区分文档流和absolute元素
+
+加入父元素宽为200px，高为100px
+
+```
+width：calc(10%)  // 20px
+height: calc(10%) // 10px
+margin: calc(10%) // 20px
+padding: calc(10%) // 20px
+```
+
+对于宽和margin和padding值，百分比是基于父元素的宽度
+
+对于高，百分比是基于父元素的高度
 
 3）使用padding-bottom实现
 
@@ -133,6 +148,23 @@ padding-bottom属性值百分比是按照父容器宽度来计算的，所以所
     <div class='attr'></div>
 </div>
 ```
+4) 利用canvas来固定容器宽高比(4:3)
+
+```
+<div class="container">
+	<canvas width="4" height="3"></canvas>
+</div>
+<style>
+	.container {
+        width: 100%;
+	}
+	canvas{
+        width：100%;
+	}
+</style>
+// 利用canvas将容器撑开，并且容器宽高比就是canvas的宽高比
+```
+
 #### 4. 行高
 
 1）line-height的含义
@@ -195,3 +227,148 @@ margin: auto; // 这个是关键点
 
 ![](/image/stacking-order.png)
 
+
+
+#### 7. 滚动加载更多
+
+在容器元素上加'list-wrapper-for-load'类，在内容元素上加'list-content-for-load'
+
+注意：**容器元素必须固定高度，并且 设置overflow: auto或者overflow:scroll**, 否则无法触发滚动事件
+
+```
+import Vue from 'vue';
+const Feed = Vue.extend({
+    mounted() {
+        $(this.$el.parentNode)
+            .find('.list-wrapper-for-load')
+            .map((index, item) => {
+                $(item).on('scroll', this.scrollAndLoadMore);
+            });
+    },
+    beforeDestroy() {
+        $(this.$el.parentNode)
+            .find('.list-wrapper-for-load')
+            .map((index, item) => {
+                $(item).off('scroll', this.scrollAndLoadMore);
+            });
+    },
+    methods: {
+        scrollAndLoadMore(event) {
+            const $target = $(event.target);
+            const contentHeight = $target.find('.list-content-for-load').height();
+            const scrollTop = $target.scrollTop();
+            if (contentHeight - 200 < $(window).height() + scrollTop) {
+                this.loadMore();
+            }
+        }
+    }
+});
+
+export default Feed;
+
+```
+
+#### 8.光标下划线跟随效果
+
+```html
+<ul>
+  <li> 不可思议的CSS</li>
+  <li> 导航栏</li>
+  <li> 光标下划线跟随</li>
+  <li> PURE CSS</li>
+  <li> Coco</li>
+</ul>
+```
+
+```css
+ul {
+    display: flex;
+    position: absolute;
+    width: 800px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+li {
+    position: relative;
+    padding: 20px;
+    font-size: 24px;
+    color: #000;
+    line-height: 1;
+    transition: 0.2s all linear;
+    cursor: pointer;
+}
+
+li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 0;
+    height: 100%;
+    border-bottom: 2px solid #000;
+    transition: 0.2s all linear;
+}
+
+li:hover::before {
+    width: 100%;
+    top: 0;
+    left: 0;
+    transition-delay: 0.1s;
+    border-bottom-color: #000;
+    z-index: -1;
+}
+// 重点 在于 css选择器的运用
+li:hover ~ li::before {
+    left: 0;
+}
+
+li:active {
+    background: #000;
+    color: #fff;
+}
+```
+
+![](https://user-images.githubusercontent.com/8554143/37949493-802228ac-31c7-11e8-9343-6c1150827cba.gif)
+
+#### 9. 页面内容不足一屏幕，footer处于窗口底部 ；页面内容超过一屏幕，footer处于页面底部。
+
+ ```html
+<html>
+<head>
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+            padding:0;
+            margin: 0;
+        }
+        .content {
+            padding-bottom: 30px;
+            min-height: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .wrap:after {
+            content: '暂无更多内容';
+            font-size: 12px;
+            color: #cacaca;
+            display: block;
+            text-align: center;
+            margin-top: -17px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="content">
+            内容高度不确定
+        </div>
+    </div>
+</body>
+</html>
+ ```
+
+关键点在于：虽然content里面的元素高度不确定，但是设置content的min-height为100%；在content的父元素上加一个after伪元素（其实就是加一个和content同级的兄弟元素。如果底部元素很多，不太方便用after那就直接在content后面加一个div，也是一样的 原理；如果底部元素简单，直接只用after可以让元素层级更简单）；同时让content有一个padding-bottom来给底部元素让位，底部元素设置一个margin-top为负数，这样底部元素自身就网上移动了。
