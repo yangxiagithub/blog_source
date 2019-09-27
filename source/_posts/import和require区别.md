@@ -1,13 +1,19 @@
 ---
 title: import和require区别
 date: 2018-07-16 11:54:54
-tags: 
+tags: 前端
 catagories: javascript
 ---
 
+先总结一下区别，之后再细聊：
+1. require是动态编译的，import是静态编译的。所以require后面的地址可以通过计算获取，import不能。
+2. require不会进行变量提升，import会。
+3. require导出的是一个拷贝值，import导入的是一个引用值(每个属性定义了getter)。
+4. require得到的变量可以修改,import得到的变量无法修改（因为es6里对于导出数据做了只读限制）
+
 #### 一. import 得到的变量是只读的，require得到的变量可以修改。
 
-1. Import
+(1) Import
 
 ```
 // a.js
@@ -30,7 +36,7 @@ console.log('a=====222', a);
 
 运行之后会得到：**"a" is read-only**
 
-2. require
+(2) require
 
 ```
 // test.js
@@ -95,15 +101,13 @@ require(url)不会报错
 
 所以require都会用在动态加载的时候。
 
-#### 四. require 输出的是一个值的拷贝：
+#### 四. require 输出的是一个值的拷贝, export 模块输出的是值的引用
 
-#### (如果是基本类型，则得到的是一个值，如果是对象，则得到的是一个地址的引用)
+对于require：如果导出的是基本类型，则得到的是一个值; 如果是对象，则得到的是一个对象地址的引用，总之就是拷贝了这个导出的值。
 
-#### export 模块输出的是值的引用：
+对于export：给module.exports上的每一个属性比如'name'，定义了一个属性描述对象Object.defineProperty(exports, 'name', { enumerable: true, get: getter }，属性描述对象有一个getter，所以每次获取这个属性的时候其实都执行了函数getter，而不是像require对应的输出一样每次使用的都是缓存值
 
-#### (给module.exports上的每一个属性比如'name'，定义了一个属性描述对象Object.defineProperty(exports, 'name', { enumerable: true, get: getter }，属性描述对象有一个getter，所以每次获取这个属性的时候其实都执行了函数getter，而不是像require对应的输出一样每次使用的都是缓存值)
-
-参考资料：http://es6.ruanyifeng.com/#docs/module-loader#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82
+[参考资料](http://es6.ruanyifeng.com/#docs/module-loader#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82)
 
 1️⃣rquire会对引入进来的数据进行缓存
 
@@ -117,47 +121,19 @@ require(url)不会报错
 
 但是  import a from 'a';      a.theProp = 1;  是可以的，因为这并没有改a的引用地址，只是加一个属性
 
-#### 五. require和import 对于 a文件都是只执行一次
+#### 五. 多次引用同一个文件，require和import 对于 都是只执行一次
 
-```
-// a.js
-function a() {
-    console.log('aaaa');
-}
-const instance = new a();
-module.exports = instance;
-```
+在这个方面import 和require都是一样的，引用相同文件都是只执行一次。
 
-```
-// b.js
-function a() {
-    console.log('aaaa');
-}
-const instance = new a();
-module.exports = instance;
-```
-
-```
-// test.js
-require('./a');
-require('./b');
-```
-
-babel-node test.js 
-
-运行结果   aaaa
-
-说明a文件只执行一次。
-
-在爱这个方面import 和require都是一样的，a文件都是只执行一次。
-
-#### 注意：
+注意：在查看了webpack打包结果之后发现
 
 其实一个文件就是对应一个module对象，module对象里面有个属性是module.exports.
 
 每个文件在最终都会变成一个函数的执行体，这个函数有三个入参：
 
 module, module.exports, webpack_require
+
+#### 导入和导出方式
 
 (1)在commonjs（也就是上面说的require）模块里，有两种导出方式：
 

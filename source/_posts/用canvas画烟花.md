@@ -1,8 +1,8 @@
 ---
 title: 用canvas画烟花
 date: 2018-08-05 17:50:32
-Categories: javascript
-tags: canvas
+categories: canvas
+tags: 前端
 ---
 
 ```

@@ -1,13 +1,13 @@
 ---
 title: javascript实用小技巧与常用工具函数
 date: 2018-03-18 16:19:38
-tags:
-categories: 'javascript'
+tags: 前端
+categories: javascript'
 ---
 
 ##### 一. 实用小技巧
 
-1. 对小数取整
+(1)对小数取整
 
 常规的对小数取整的方法有parseInt(1.2)，Math.floor(1.2),  Math.ceil(-1.2), Math.round(1.6)
 
@@ -22,22 +22,22 @@ var b = a | 0; // b 为 3
 var c = a >> 0 // c 为 3
 ```
 
-2. 精确到某一位小数
+(2)精确到某一位小数
 
 ```
-2.345toFiexed(2) 
+2.345.toFixed(2) 
 99.456001.toPrecision(5)
 ```
 
 缺点：结果会变成字符串类型
 
-3. 两个！！可以快速转换为bool型数据
+(3)两个！！可以快速转换为bool型数据
 
  undefined, null, 0, false, NaN, ' '
 
 这些数据前面加上!!都会转换为false
 
-4. ~按位取反:  可以理解为取反之后再减1
+(4)~按位取反:  可以理解为取反之后再减1
 
    ```javascript
    var a = 'abc';
@@ -88,9 +88,10 @@ url实例：http://www.runoob.com/index.php?id=1&image=awesome.jpg
    function throttle (delay, action) {
        var last = 0;
        return function () {
-           var current = new Date();
+           var current = +new Date();
            if (current - last > delay) {
-               action.apply(this, arguments);
+               // action.apply(this, arguments);
+               action(arguments);
                last = current;
            }
        }

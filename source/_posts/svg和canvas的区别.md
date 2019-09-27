@@ -1,8 +1,8 @@
 ---
 title: svg和canvas的区别
 date: 2018-06-04 11:55:19
-tags:
-categories: 前端开发
+tags: 前端
+categories: canvas
 ---
 
 | canvas                                                       | svg                                                     |

@@ -1,7 +1,7 @@
 ---
 title: 学习nginx
 date: 2018-04-23 17:10:41
-tags:
+tags: 工具
 categories: nginx
 ---
 

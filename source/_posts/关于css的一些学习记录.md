@@ -1,7 +1,7 @@
 ---
 title: 关于css的一些学习记录
 date: 2018-03-18 16:20:00
-tags:
+tags: 前端
 categories: css
 ---
 
@@ -171,14 +171,14 @@ padding-bottom属性值百分比是按照父容器宽度来计算的，所以所
 
 ```
 line-height:26px; 表示行高为26个像素
-line-heigth:120%;表示行高为元素本身字体大小font-size的120%(如果自身没有设置font-size，那就				是父容器的font-size，因为font-size也和line-height一样也有继承)
+line-heigt:120%;表示行高为元素本身字体大小font-size的120%(如果自身没有设置font-size，那就是父容器的font-size，因为font-size也和line-height一样也有继承)
 line-height:2.6em; 表示行高为元素字体大小font-size的2.6倍
 line-height:2.6;表示行高为当前字体大小的2.6倍
 ```
 
 2）line-height的继承性
 
- （a）带单位的行高继承的是计算值（em，%）都算是单位。
+ （a）带单位的行高继承的是计算值（em，%都算是单位)。
 
 ​	如父元素的字体大小为14px，定义行高line-height:2em;则计算值为 28px，不会因其子元素改变字		体尺寸而改变行高。(例如：父元素14px，子元素12px,那么行高就是28px，子元素虽然字体是12px，行高还是父元素的行高)
 
@@ -372,3 +372,48 @@ li:active {
  ```
 
 关键点在于：虽然content里面的元素高度不确定，但是设置content的min-height为100%；在content的父元素上加一个after伪元素（其实就是加一个和content同级的兄弟元素。如果底部元素很多，不太方便用after那就直接在content后面加一个div，也是一样的 原理；如果底部元素简单，直接只用after可以让元素层级更简单）；同时让content有一个padding-bottom来给底部元素让位，底部元素设置一个margin-top为负数，这样底部元素自身就网上移动了。
+
+#### 10. border-radius 与overflow 问题
+
+##### 第一部分：问题由来：
+
+```html
+<div class="wrapper">
+	<div class="content"></div>
+</div>
+```
+
+```css
+.wrapper {
+  width: 100px;
+  height： 100px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+```
+
+当外层div需要一个圆角时，需要设置overflow：hidden来遮盖里面content类的超出圆角部分的内容。
+
+如果content类的内容很少，不需要滚动的时候上面的写法没有问题。但是当content类的内容很多，需要滚动展示的时候，设置``overflow: hidden;`` 就会不能滚动，所以需要写成``overflow: auto;``
+
+然而你会发现写成``overflow: auto;`` 之后``border-radius: 6px;``就不生效了，圆角看不见了。这时候需要用到``mask-image`` 属性。遮罩图片是一张1px的全黑图片。
+
+最终css长这样：
+
+```css
+.wrapper {
+  width: 100px;
+  height： 100px;
+  border-radius: 6px;
+  overflow: auto;
+  // 修复border-radius不生效问题
+    -webkit-mask-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg==');
+}
+```
+
+##### 第二部分：mask-image解析
+
+mask-image即遮罩，就是在原始内容基础上只显示遮罩图片透明的部分（透明：没有，黑色：透明，白色：不透明，其它：介于两者之间）
+
+具体可以看[文章1](https://www.zhangxinxu.com/wordpress/2017/11/css-css3-mask-masks/)[文章2](https://segmentfault.com/a/1190000011838367)
+

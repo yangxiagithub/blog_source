@@ -1,7 +1,8 @@
 ---
 title: 搭建hexo博客遇到的坑
 date: 2018-02-09 15:08:21
-categories: 工具
+tags: 工具
+categories: git
 ---
 
 ### 一. github的仓库名字

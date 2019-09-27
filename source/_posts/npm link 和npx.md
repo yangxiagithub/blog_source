@@ -1,7 +1,7 @@
 ---
 title: npm link的原理
 date: 2018-05-28 14:14:55
-tags:
+tags: 工具
 categories: linux
 ---
 

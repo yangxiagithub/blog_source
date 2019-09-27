@@ -1,7 +1,7 @@
 ---
 title: shell编程语法学习
 date: 2018-12-20 12:19:08
-tags: 
+tags: shell
 catogories: shell
 ---
 

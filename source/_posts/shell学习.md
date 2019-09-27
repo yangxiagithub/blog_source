@@ -1,7 +1,7 @@
 ---
 title: shell学习
 date: 2018-05-28 15:43:44
-tags: 
+tags: 基础
 categories: linux
 ---
 

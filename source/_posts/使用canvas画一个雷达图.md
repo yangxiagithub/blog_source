@@ -1,8 +1,8 @@
 ---
 title: 使用canvas画一个雷达图
 date: 2018-08-05 14:07:22
-Catagories: javascript
-tags: canvas
+catagories: canvas
+tags: 前端
 ---
 
 #### 一. 代码

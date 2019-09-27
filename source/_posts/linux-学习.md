@@ -1,7 +1,7 @@
 ---
 title: linux 学习
 date: 2018-05-23 16:40:50
-tags: 
+tags: 基础
 categories: linux
 ---
 

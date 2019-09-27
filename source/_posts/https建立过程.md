@@ -1,8 +1,8 @@
 ---
 title: https建立过程
 date: 2018-08-16 19:58:58
-tags: 
-categories: 前端开发
+tags: 基础
+categories: http
 ---
 
 [参考链接](http://www.cnblogs.com/zhuqil/archive/2012/07/23/2604572.html)

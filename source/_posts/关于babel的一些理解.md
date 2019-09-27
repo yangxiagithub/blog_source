@@ -1,8 +1,8 @@
 ---
 title: 关于babel的一些理解
 date: 2018-12-12 14:27:03
-tags: 
-catogories: 前端
+tags: 前端
+catogories: javascript
 ---
 
 ### 一. 为什么要使用babel
@@ -183,5 +183,9 @@ findIndex([1, 2, NaN, 3, 4], isNaN); // => 2
 所以，我理解的babel-polyfill这个包对core-js的引用方式应该是第一种，而babel-runtime对core-js的引用方式是第二种
 
 ###总结：babel的难点在于理解polyfill，runtime和core-js，通过本文理解清楚三者之间的关系和区别
+
+
+
+babel-polyfill 与 babel-runtime 的一大区别:  前者改造目标浏览器，让你的浏览器拥有本来不支持的特性；后者改造你的代码，让你的代码能在所有目标浏览器上运行，但不改造浏览器。
 
 [参考链接](https://www.jianshu.com/p/3b27dfc6785c)

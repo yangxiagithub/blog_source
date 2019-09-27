@@ -1,7 +1,7 @@
 ---
 title: vue开发遇到的坑
 date: 2018-02-28 15:02:16
-tags:
+tags: 前端
 categories: javascript
 ---
 

@@ -1,7 +1,8 @@
 ---
 title: 'dataURL,canvas,file(Blob),objectURL之间的转化关系'
 date: 2018-08-20 10:51:29
-tags: 前端开发
+tags: 前端
+categories: javascript
 ---
 
 #### 一：四者之间的关系
