@@ -12,7 +12,7 @@ tags: javascript
     缓冲：一个缓冲（由 [ArrayBuffer](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) 对象实现）描述的是一个数据块。缓冲没有格式可言，并且不提供机制访问其内容
     视图：为了访问在缓冲对象中包含的内存，你需要使用视图。视图提供了上下文 — 即数据类型、起始偏移量和元素数 — 将数据转换为实际有类型的数组。
 
-![Pasted Graphic 2.tiff](/var/folders/94/rx6xmp9n65d5_h2bj9d6xxbm0000gq/T/abnerworks.Typora/36812DED-9E9D-4189-A3BD-BC8FA5610887/Pasted%20Graphic%202.tiff)
+![](/image/js-binary-1.png)
 
 4. 缓冲(ArrayBuffer)
 
@@ -21,18 +21,18 @@ tags: javascript
 5. 类型数组视图
     类型化数组视图具有自描述性的名字和所有常用的数值类型像Int8，Uint32，Float64 等等。有一种特殊类型的数组Uint8ClampedArray。它仅操作0到255之间的数值。例如，这对于[Canvas数据处理](https://developer.mozilla.org/zh-CN/docs/Web/API/ImageData)非常有用。
 
-![Pasted Graphic 3.tiff](/var/folders/94/rx6xmp9n65d5_h2bj9d6xxbm0000gq/T/abnerworks.Typora/36812DED-9E9D-4189-A3BD-BC8FA5610887/Pasted%20Graphic%203.tiff)
+![](/image/js-binary-2.png)
 
 （1）这里可以说下 [Uint8ClampedArray](http://www.javascripture.com/Uint8ClampedArray) 和 [Uint8Array](http://www.javascripture.com/Uint8Array)的区别：就在于处理超出边界的值时有区别。
  [具体解析可以看stackoverflow链接](https://stackoverflow.com/questions/21819870/difference-between-uint8array-and-uint8clampedarray)
 
 （2）用代码看看ArrayBuffer和类型数组
 
-![Pasted Graphic 4.tiff](/var/folders/94/rx6xmp9n65d5_h2bj9d6xxbm0000gq/T/abnerworks.Typora/36812DED-9E9D-4189-A3BD-BC8FA5610887/Pasted%20Graphic%204.tiff)
+![](/image/js-binary-3.png)
 
 （3）转换为普通数组
 
-![Pasted Graphic 5.tiff](/var/folders/94/rx6xmp9n65d5_h2bj9d6xxbm0000gq/T/abnerworks.Typora/36812DED-9E9D-4189-A3BD-BC8FA5610887/Pasted%20Graphic%205.tiff)
+![](/image/js-binary-4.png)
 
 6. 数据视图(DataView)
     [DataView](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/DataView) 是一种底层接口，它提供有可以操作缓冲区中任意数据的读写接口。这对操作不同类型数据的场景很有帮助，例如：类型化数组视图都是运行在本地字节序模式(参考 [Endianness](https://developer.mozilla.org/zh-CN/docs/Glossary/Endianness))，可以通过使用 DataView 来控制字节序。默认是大端字节序(Big-endian)，但可以调用读写接口改为小端字节序(Little-endian)。
@@ -46,13 +46,13 @@ Blob: Binary Large Object 二进制类型的大对象
 在Web中，Blob类型的对象表示不可变的类似文件对象的原始数据，通俗点说，Blob对象就是二进制数据，但它是类似文件对象的二进制数据，因此可以像操作File对象一样操作Blob对象，实际上，File继承自Blob
  （1）通过代码认识Blob
 
-![Pasted Graphic 6.tiff](/var/folders/94/rx6xmp9n65d5_h2bj9d6xxbm0000gq/T/abnerworks.Typora/36812DED-9E9D-4189-A3BD-BC8FA5610887/Pasted%20Graphic%206.tiff)
+![](/image/js-binary-6.png)
 
-![Pasted Graphic 7.tiff](/var/folders/94/rx6xmp9n65d5_h2bj9d6xxbm0000gq/T/abnerworks.Typora/36812DED-9E9D-4189-A3BD-BC8FA5610887/Pasted%20Graphic%207.tiff)
+![](/image/js-binary-7.png)
 
 （2）从Blob中提取数据
 
-![Pasted Graphic 8.tiff](/var/folders/94/rx6xmp9n65d5_h2bj9d6xxbm0000gq/T/abnerworks.Typora/36812DED-9E9D-4189-A3BD-BC8FA5610887/Pasted%20Graphic%208.tiff)
+![](/image/js-binary-8.png)
 
 疑问：既然Blob有blob.arrayBuffer()方法来获取blob对象的ArrayBuffer，为啥还要使用FileReader？
 

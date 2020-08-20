@@ -92,8 +92,8 @@ console.log(-3 & 1)    // 1
 ```
 console.log(6.83 >> 0)  // 6
 console.log(6.83 << 0)  // 6
-console.log(-6.83 << 0)  // 6
-console.log(-6.83 >> 0)  // 6
+console.log(-6.83 << 0)  // -6
+console.log(-6.83 >> 0)  // -6
 ```
 
 ```
