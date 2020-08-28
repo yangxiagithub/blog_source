@@ -16,7 +16,7 @@ babel是一个转译器，感觉相对于编译器compiler，叫转译器transpi
 (1) babel的编译过程可以分成三个步骤：
 
 - The parser: [`@babel/parser`](https://github.com/babel/babel/blob/master/packages/babel-parser) (解析：将代码转换成AST)
-- The transformer[s]: All the plugins/presets （转换：访问AST几点进行转换生成新的AST）
+- The transformer[s]: All the plugins/presets （转换：访问AST节点进行转换生成新的AST）
   - These all use [`@babel/traverse`](https://github.com/babel/babel/blob/master/packages/babel-traverse) to traverse through the AST
 - The generator: [`@babel/generator`](https://github.com/babel/babel/blob/master/packages/babel-generator) （生成：以新的AST为基础生成代码）
 
